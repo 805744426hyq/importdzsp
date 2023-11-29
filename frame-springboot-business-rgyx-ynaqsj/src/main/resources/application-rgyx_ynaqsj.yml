@@ -1,0 +1,12 @@
+#### 项目配置
+project:
+  ## 业务
+  business:
+    models:
+      rgyx:
+        #本模块配置文件属性信息根节点
+        gdryv3:
+          modelCode: rgyx_ynaqsj
+          #模块中文名称
+          modelName: 云南人影安全射界图系统项目
+          version: @version@

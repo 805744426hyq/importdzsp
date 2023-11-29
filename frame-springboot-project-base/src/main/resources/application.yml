@@ -1,0 +1,102 @@
+server:
+  port: 3366
+  servlet:
+    context-path: /ynaqsj
+  session:
+    # session 超时时间 7天 ‘D’ – 天  ‘H’ – 小时  ‘M’ – 分钟  ‘S’ – 秒
+    timeout: 2H
+  tomcat:
+    max-http-form-post-size: -1 #配置form表单提交大小，设置-1
+    connection-timeout: 600s
+
+spring:
+  profiles:
+    active: dev
+    include: admin,rgyx_ynaqsj
+
+  jackson:
+    default-property-inclusion: ALWAYS
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+
+  #  application:
+  #    name: app-monitor
+  mvc:
+    hiddenmethod:
+      filter:
+        #启用PUT、DELETE请求方式
+        enabled: true
+    # 连接池配置
+    hikari:
+      #连接池名称
+      pool-name: HikariPool
+      #最小空闲连接数
+      minimum-idle: 2
+      #连接池最大连接数
+      maximum-pool-size: 10
+      #连接超时时间，默认30000
+      connection-timeout: 30000
+      #空闲连接存活最大时间，默认600000
+      idle-timeout: 600000
+      #连接池最长生命周期，0表示无限生命周期，默认1800000(30分钟)
+      max-lifetime: 1800000
+    #初始化模式 always=始终执行初始化；embedded=初始化内存数据库（默认值）；never=不执行初始化
+    initialization-mode: never
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    database: MYSQL
+    generate-ddl: false
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        # 使用jpa批量方法新增，会绑定1000条数据在一个insert里
+        jdbc:
+          batch_size: 1000
+        dialect: org.hibernate.spatial.dialect.mysql.MySQL56InnoDBSpatialDialect
+        default_schema: project_base
+        current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+        #允许非事务写
+        allow_update_outside_transaction: true
+    show-sql: true
+  servlet:
+    #上传文件配置
+    multipart:
+      #上传文件总的最大值
+      max-request-size: 1024MB
+      #单个文件的最大值
+      max-file-size: 50MB
+  # flyway 配置
+  flyway:
+    # 启用或禁用 flyway
+    enabled: true
+    #表结构存在，flyway记录表不存在时须开启
+    baseline-on-migrate: true
+    # #是否禁用清除，默认false，生产环境不可清除数据，必须为true
+    clean-disabled: true
+#### 项目配置
+project:
+  #项目名称
+  name: 三维时空基础系统框架
+  nodeName: 未配置
+  provinceCode: 53000
+  base:
+    #项目资源存放根路径
+    rootPath: E://SWSK/RGYX_QX
+  #项目数据缓存目录
+  cacheDir:
+    rootPath: ${project.base.rootPath}/cache
+
+#日志配置
+logging:
+  level:
+    root: info
+  file:
+    path: ${project.base.rootPath}/logs
+
+#天擎配置
+tianQin:
+  httpUrl: http://10.181.90.120
+  userId: USR_XBRY_YWZH
+  pwd: Xbry20201020

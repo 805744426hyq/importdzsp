@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3336/dzsp_qh?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false
+    username: dzsp_qh
+    password: dzsp_qh
+  jpa:
+    show-sql: false
+  flyway:
+    # 是否允许不按顺序迁移 开发建议 true  生产建议 false
+    out-of-order: false
+
