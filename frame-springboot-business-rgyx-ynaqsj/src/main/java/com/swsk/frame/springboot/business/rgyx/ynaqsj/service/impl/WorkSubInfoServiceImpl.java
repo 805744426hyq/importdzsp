@@ -2,6 +2,7 @@ package com.swsk.frame.springboot.business.rgyx.ynaqsj.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
@@ -19,7 +20,6 @@ import com.swsk.frame.springboot.business.rgyx.ynaqsj.util.ResultUtil;
 import com.swsk.frame.springboot.business.rgyx.ynaqsj.util.TianQinUtils;
 import com.swsk.frame.springboot.core.hibernate.service.impl.BaseServiceImpl;
 import com.swsk.frame.springboot.core.util.ConfigUtil;
-import com.swsk.frame.springboot.core.util.DateUtil;
 import com.swsk.frame.springboot.core.util.MResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,6 +40,10 @@ import java.util.*;
 @Service("workSubInfoService")
 @Transactional(rollbackOn = Exception.class)
 public class WorkSubInfoServiceImpl extends BaseServiceImpl implements WorkSubInfoService {
+
+
+    @Value("${waterInfo}")
+    private String waterInfoUrl;
 
     public static Map<String, String> weatherMap = new HashMap<>();
 
@@ -135,9 +139,8 @@ public class WorkSubInfoServiceImpl extends BaseServiceImpl implements WorkSubIn
      */
     @Override
     public String getReservoirWaterInfo() {
-        String url = "http://221.207.11.244:9016/newApi/api/shyj/sl323/rsvr/select-stress-rsvr-by-page";
 
-        String date = DateUtil.getCurrDate("yyyy-MM-dd") + " 08:00";
+        String date = DateUtil.today() + " 08:00";
 
         JSONObject paramMap = new JSONObject();
         paramMap.put("adcd", "630000000000000");
@@ -147,15 +150,16 @@ public class WorkSubInfoServiceImpl extends BaseServiceImpl implements WorkSubIn
         paramMap.put("pageSize", -1);
 
         paramMap.put("warnFlag", false);
-        paramMap.put("frgrd", "");
-        paramMap.put("isOut", "");
-        paramMap.put("rvnm", "");
-        paramMap.put("stnm", "");
+        String value = StrUtil.EMPTY;
+        paramMap.put("frgrd", value);
+        paramMap.put("isOut", value);
+        paramMap.put("rvnm", value);
+        paramMap.put("stnm", value);
 
-        paramMap.put("wscd", "");
+        paramMap.put("wscd", value);
         String jsonString = JSONObject.toJSONString(paramMap);
 
-        return HttpUtil.post(url, jsonString);
+        return HttpUtil.post(waterInfoUrl, jsonString);
     }
 
     /**

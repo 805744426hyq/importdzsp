@@ -100,3 +100,5 @@ tianQin:
   httpUrl: http://10.181.90.120
   userId: USR_XBRY_YWZH
   pwd: Xbry20201020
+
+waterInfo: http://221.207.11.244:9016/newApi/api/shyj/sl323/rsvr/select-stress-rsvr-by-page
